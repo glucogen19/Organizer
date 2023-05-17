@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QPushButton>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -20,8 +21,10 @@ private slots:
     void keyPressEvent(QKeyEvent *event);
 
     void on_pushButton_del_clicked();
+    void crButton();
 
 private:
     Ui::MainWindow *ui;
+    QPushButton *mainButton;
 };
 #endif // MAINWINDOW_H
