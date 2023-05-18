@@ -21,10 +21,8 @@ private slots:
     void keyPressEvent(QKeyEvent *event);
 
     void on_pushButton_del_clicked();
-    void crButton();
 
 private:
     Ui::MainWindow *ui;
-    QPushButton *mainButton;
 };
 #endif // MAINWINDOW_H
