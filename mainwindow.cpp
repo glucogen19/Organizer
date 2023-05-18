@@ -10,6 +10,7 @@ QLineEdit *lineEd[50];
 QPushButton *checkB[50];
 QPushButton *editB[50];
 QPushButton *delB[50];
+QDateEdit *dateE[50];
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -18,7 +19,14 @@ MainWindow::MainWindow(QWidget *parent)
      ui->setupUi(this);
      setFixedSize(530, 580);
      setFocusPolicy(Qt::StrongFocus);
-     ///
+     ui->scrollArea->setFixedHeight(400);
+     ui->dateEdit->setDate(QDate::currentDate());
+     ui->lineEdit->setFixedHeight(25);
+     ui->dateEdit->setFixedHeight(25);
+     ui->dateEdit->setFixedWidth(80);
+     ui->pushButton->setFixedHeight(25);
+     ui->pushButton_del->setFixedHeight(25);
+     ui->mainLay->setSpacing(5);
 
 }
 MainWindow::~MainWindow()
@@ -31,7 +39,7 @@ int cnt = 0; // Указатель для работы с массивом
 void MainWindow::on_pushButton_clicked()
 {
     if(cnt < 50){   // Условный цикл, чтобы не выйти за пределы массивов
-    //    if(ui->lineEdit->text() != "\0"){ // Условный цикл, чтобы не создавалсь пустая строка
+       if(ui->lineEdit->text() != "\0"){ // Условный цикл, чтобы не создавалсь пустая строка
             ui->scrollAreaWidgetContents->show(); // Показ содержимого объекта ScrollArea
 
             lineEd[cnt] = new QLineEdit; // Выделение памяти для объекта класса QLineEdit в элементе массива lineEd
@@ -61,9 +69,22 @@ void MainWindow::on_pushButton_clicked()
             ui->delLay->setAlignment(Qt::AlignTop);
             ui->delLay->addWidget(delB[cnt]);
 
+
+            dateE[cnt] = new QDateEdit;
+            dateE[cnt]->setFixedHeight(25);
+            dateE[cnt]->setDate(ui->dateEdit->date());
+            dateE[cnt]->setReadOnly(true);
+            dateE[cnt]->setCalendarPopup(true);
+            dateE[cnt]->setFixedWidth(80);
+            dateE[cnt]->setMinimumDate(QDate::currentDate());
+
+            ui->dateLay->setSpacing(5);
+            ui->dateLay->setAlignment(Qt::AlignTop);
+            ui->dateLay->addWidget(dateE[cnt]);
+
             cnt++; // Инкрементируем указатель
             ui->lineEdit->clear(); // Очистка текста
-     //   }
+        }
     }
 }
 
@@ -85,6 +106,7 @@ void MainWindow::on_pushButton_del_clicked() // Очистка Таблицы
         delete editB[i];
         delete lineEd[i];
         delete delB[i];
+        delete dateE[i];
     }
     cnt = 0;
 }

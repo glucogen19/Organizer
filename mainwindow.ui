@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>530</width>
-    <height>578</height>
+    <height>640</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,156 +17,125 @@
    <string notr="true"/>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QTextEdit" name="textEdit">
-    <property name="geometry">
-     <rect>
-      <x>11</x>
-      <y>456</y>
-      <width>508</width>
-      <height>86</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"/>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>11</x>
-      <y>429</y>
-      <width>60</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Заметки:</string>
-    </property>
-   </widget>
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>11</x>
-      <y>11</y>
-      <width>501</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QLineEdit" name="lineEdit">
-       <property name="styleSheet">
-        <string notr="true"/>
-       </property>
-       <property name="clearButtonEnabled">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QTimeEdit" name="timeEdit"/>
-     </item>
-     <item>
-      <widget class="QDateEdit" name="dateEdit">
-       <property name="dateTime">
-        <datetime>
-         <hour>0</hour>
-         <minute>0</minute>
-         <second>0</second>
-         <year>2023</year>
-         <month>5</month>
-         <day>1</day>
-        </datetime>
-       </property>
-       <property name="calendarPopup">
-        <bool>true</bool>
-       </property>
-       <property name="timeSpec">
-        <enum>Qt::LocalTime</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButton">
-       <property name="text">
-        <string>Создать</string>
-       </property>
-       <property name="autoDefault">
-        <bool>true</bool>
-       </property>
-       <property name="default">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButton_del">
-       <property name="text">
-        <string>Удалить все</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QScrollArea" name="scrollArea">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>50</y>
-      <width>501</width>
-      <height>401</height>
-     </rect>
-    </property>
-    <property name="widgetResizable">
-     <bool>true</bool>
-    </property>
-    <widget class="QWidget" name="scrollAreaWidgetContents">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>499</width>
-       <height>399</height>
-      </rect>
-     </property>
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <layout class="QGridLayout" name="gridLayout">
-      <item row="0" column="0">
-       <layout class="QVBoxLayout" name="checkLay">
-        <property name="sizeConstraint">
-         <enum>QLayout::SetMinAndMaxSize</enum>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <layout class="QHBoxLayout" name="mainLay">
+      <item>
+       <widget class="QLineEdit" name="lineEdit">
+        <property name="styleSheet">
+         <string notr="true"/>
         </property>
-       </layout>
+        <property name="clearButtonEnabled">
+         <bool>false</bool>
+        </property>
+       </widget>
       </item>
-      <item row="0" column="1">
-       <layout class="QVBoxLayout" name="lineEdLay">
-        <property name="sizeConstraint">
-         <enum>QLayout::SetMinAndMaxSize</enum>
+      <item>
+       <widget class="QDateEdit" name="dateEdit">
+        <property name="calendarPopup">
+         <bool>true</bool>
         </property>
-       </layout>
+        <property name="timeSpec">
+         <enum>Qt::LocalTime</enum>
+        </property>
+       </widget>
       </item>
-      <item row="0" column="2">
-       <layout class="QVBoxLayout" name="editLay">
-        <property name="sizeConstraint">
-         <enum>QLayout::SetMinAndMaxSize</enum>
+      <item>
+       <widget class="QPushButton" name="pushButton">
+        <property name="text">
+         <string>Создать</string>
         </property>
-       </layout>
+        <property name="autoDefault">
+         <bool>true</bool>
+        </property>
+        <property name="default">
+         <bool>true</bool>
+        </property>
+       </widget>
       </item>
-      <item row="0" column="3">
-       <layout class="QVBoxLayout" name="delLay">
-        <property name="sizeConstraint">
-         <enum>QLayout::SetMinAndMaxSize</enum>
+      <item>
+       <widget class="QPushButton" name="pushButton_del">
+        <property name="text">
+         <string>Удалить все</string>
         </property>
-       </layout>
+       </widget>
       </item>
      </layout>
-    </widget>
-   </widget>
+    </item>
+    <item>
+     <widget class="QScrollArea" name="scrollArea">
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scrollAreaWidgetContents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>506</width>
+         <height>259</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="2">
+         <layout class="QVBoxLayout" name="dateLay"/>
+        </item>
+        <item row="0" column="1">
+         <layout class="QVBoxLayout" name="lineEdLay">
+          <property name="sizeConstraint">
+           <enum>QLayout::SetMinAndMaxSize</enum>
+          </property>
+         </layout>
+        </item>
+        <item row="0" column="4">
+         <layout class="QVBoxLayout" name="editLay">
+          <property name="sizeConstraint">
+           <enum>QLayout::SetMinAndMaxSize</enum>
+          </property>
+         </layout>
+        </item>
+        <item row="0" column="0">
+         <layout class="QVBoxLayout" name="checkLay">
+          <property name="sizeConstraint">
+           <enum>QLayout::SetMinAndMaxSize</enum>
+          </property>
+         </layout>
+        </item>
+        <item row="0" column="5">
+         <layout class="QVBoxLayout" name="delLay">
+          <property name="sizeConstraint">
+           <enum>QLayout::SetMinAndMaxSize</enum>
+          </property>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>Заметки:</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTextEdit" name="textEdit">
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

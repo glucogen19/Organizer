@@ -17,11 +17,9 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_pushButton_clicked();
     void keyPressEvent(QKeyEvent *event);
-
+    void on_pushButton_clicked();
     void on_pushButton_del_clicked();
-
 private:
     Ui::MainWindow *ui;
 };
