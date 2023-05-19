@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include <QKeyEvent>
 #include <QRandomGenerator>
+#include <iterator>
 
 bool REview = false;
 
@@ -82,6 +83,10 @@ void MainWindow::on_pushButton_clicked()
             ui->dateLay->setAlignment(Qt::AlignTop);
             ui->dateLay->addWidget(dateE[cnt]);
 
+            connect(delB[cnt], SIGNAL(clicked()),this, SLOT(slotDel()));
+            connect(editB[cnt], SIGNAL(clicked()), this, SLOT(slotEdit()));
+
+
             cnt++; // Инкрементируем указатель
             ui->lineEdit->clear(); // Очистка текста
         }
@@ -101,12 +106,36 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
 
 void MainWindow::on_pushButton_del_clicked() // Очистка Таблицы
 {
-    for(int i=0;i<cnt;i++){  // Цикл для очистки массивов. Продолжается до элемента cnt, чтобы не выйти за пределы массивов
-        delete checkB[i]; // Освобождение памяти элемента
-        delete editB[i];
-        delete lineEd[i];
-        delete delB[i];
-        delete dateE[i];
+    /*for(int i=0;i<cnt;i++){  // Цикл для очистки массивов. Продолжается до элемента cnt, чтобы не выйти за пределы массивов
+        delete [] checkB; // Освобождение памяти элемента
+        delete [] editB;
+        delete [] lineEd;
+        delete [] delB;
+        delete [] dateE;
     }
-    cnt = 0;
+    cnt = 0;*/
+}
+
+void MainWindow::slotDel(){
+    QPushButton *button = (QPushButton*) sender();
+    int mas = 0;
+    while(button != *(delB+mas)){
+        mas++;
+    }
+    delete checkB[mas]; // Освобождение памяти элемента
+    delete editB[mas];
+    delete lineEd[mas];
+    delete delB[mas];
+    delete dateE[mas];
+}
+
+void MainWindow::slotEdit()
+{
+    QPushButton *button = (QPushButton*) sender();
+    int mas = 0;
+    while(button != *(editB+mas)){
+        mas++;
+    }
+
+
 }
