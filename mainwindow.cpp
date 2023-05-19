@@ -2,9 +2,11 @@
 #include "ui_mainwindow.h"
 #include <QKeyEvent>
 #include <QRandomGenerator>
+#include <QPalette>
+
 #include <iterator>
 
-bool REview = false;
+bool edit = true;
 
 //Объявление глобальных массивов
 QLineEdit *lineEd[50];
@@ -40,7 +42,7 @@ int cnt = 0; // Указатель для работы с массивом
 void MainWindow::on_pushButton_clicked()
 {
     if(cnt < 50){   // Условный цикл, чтобы не выйти за пределы массивов
-       if(ui->lineEdit->text() != "\0"){ // Условный цикл, чтобы не создавалсь пустая строка
+     //  if(ui->lineEdit->text() != "\0"){ // Условный цикл, чтобы не создавалсь пустая строка
             ui->scrollAreaWidgetContents->show(); // Показ содержимого объекта ScrollArea
 
             lineEd[cnt] = new QLineEdit; // Выделение памяти для объекта класса QLineEdit в элементе массива lineEd
@@ -85,11 +87,12 @@ void MainWindow::on_pushButton_clicked()
 
             connect(delB[cnt], SIGNAL(clicked()),this, SLOT(slotDel()));
             connect(editB[cnt], SIGNAL(clicked()), this, SLOT(slotEdit()));
+            connect(checkB[cnt], SIGNAL(clicked()), this, SLOT(slotCheck()));
 
 
             cnt++; // Инкрементируем указатель
-            ui->lineEdit->clear(); // Очистка текста
-        }
+            ui->lineEdit->clear(); // Очистка текста в lineedit
+    //    }
     }
 }
 
@@ -106,14 +109,16 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
 
 void MainWindow::on_pushButton_del_clicked() // Очистка Таблицы
 {
-    /*for(int i=0;i<cnt;i++){  // Цикл для очистки массивов. Продолжается до элемента cnt, чтобы не выйти за пределы массивов
-        delete [] checkB; // Освобождение памяти элемента
-        delete [] editB;
-        delete [] lineEd;
-        delete [] delB;
-        delete [] dateE;
+  /*  for(int i=0;i<cnt;i++){  // Цикл для очистки массивов. Продолжается до элемента cnt, чтобы не выйти за пределы массивов
+        if (checkB[i]->is){
+            delete [] checkB; // Освобождение памяти элемента
+            delete [] editB;
+            delete [] lineEd;
+            delete [] delB;
+            delete [] dateE;
+        }
     }
-    cnt = 0;*/
+    cnt = 0; */
 }
 
 void MainWindow::slotDel(){
@@ -136,6 +141,28 @@ void MainWindow::slotEdit()
     while(button != *(editB+mas)){
         mas++;
     }
+        edit = !edit;
+        lineEd[mas]->setReadOnly(edit);
+        dateE[mas]->setReadOnly(edit);
+}
 
+void MainWindow::slotCheck()
+{
+    QPushButton *button = (QPushButton*) sender();
+    int mas = 0;
+    while(button != *(checkB+mas)){
+        mas++;
+    }
 
+        QLineEdit* lineEdit = lineEd[mas];
+        QPalette palette = lineEdit->palette();
+        palette.setColor(QPalette::Base, "#99CCCC");
+        if(checkB[mas]->isChecked() == true) {
+            lineEdit->setAutoFillBackground(true); // Установка флага автоматического закрашивания фона
+            lineEdit->setPalette(palette);
+        }
+        else {
+            lineEdit->setAutoFillBackground(false); // Отключение автоматического закрашивания фона
+            lineEdit->setPalette(QApplication::palette()); // Восстановление палитры по умолчанию
+        }
 }

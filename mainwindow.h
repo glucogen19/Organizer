@@ -20,6 +20,7 @@ private slots:
     void keyPressEvent(QKeyEvent *event);
     void slotDel();
     void slotEdit();
+    void slotCheck();
     void on_pushButton_clicked();
     void on_pushButton_del_clicked();
 private:
