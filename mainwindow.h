@@ -23,6 +23,8 @@ private slots:
     void slotCheck();
     void on_pushButton_clicked();
     void on_pushButton_del_clicked();
+    void on_SaveFile_triggered();
+
 private:
     Ui::MainWindow *ui;
 };

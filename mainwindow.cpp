@@ -3,8 +3,9 @@
 #include <QKeyEvent>
 #include <QRandomGenerator>
 #include <QPalette>
-
 #include <iterator>
+#include <fstream>
+#include <iostream>
 
 bool edit = true;
 
@@ -42,7 +43,7 @@ int cnt = 0; // Указатель для работы с массивом
 void MainWindow::on_pushButton_clicked()
 {
     if(cnt < 50){   // Условный цикл, чтобы не выйти за пределы массивов
-     //  if(ui->lineEdit->text() != "\0"){ // Условный цикл, чтобы не создавалсь пустая строка
+       if(ui->lineEdit->text() != "\0"){ // Условный цикл, чтобы не создавалсь пустая строка
             ui->scrollAreaWidgetContents->show(); // Показ содержимого объекта ScrollArea
 
             lineEd[cnt] = new QLineEdit; // Выделение памяти для объекта класса QLineEdit в элементе массива lineEd
@@ -92,7 +93,7 @@ void MainWindow::on_pushButton_clicked()
 
             cnt++; // Инкрементируем указатель
             ui->lineEdit->clear(); // Очистка текста в lineedit
-    //    }
+        }
     }
 }
 
@@ -109,28 +110,30 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
 
 void MainWindow::on_pushButton_del_clicked() // Очистка Таблицы
 {
-  /*  for(int i=0;i<cnt;i++){  // Цикл для очистки массивов. Продолжается до элемента cnt, чтобы не выйти за пределы массивов
-        if (checkB[i]->is){
-            delete [] checkB; // Освобождение памяти элемента
-            delete [] editB;
-            delete [] lineEd;
-            delete [] delB;
-            delete [] dateE;
+    for(int i=0;i<cnt;i++){  // Цикл для очистки массивов. Продолжается до элемента cnt, чтобы не выйти за пределы массивов
+        if (delB[i] != NULL){ // Проверка элемента, соответственно, и всей строки на существование
+            delete checkB[i]; // Освобождение памяти элемента
+            delete editB[i];
+            delete lineEd[i];
+            delete delB[i];
+            delete dateE[i];
         }
     }
-    cnt = 0; */
+    cnt = 0;
 }
 
-void MainWindow::slotDel(){
-    QPushButton *button = (QPushButton*) sender();
+
+void MainWindow::slotDel(){ // Удаление строки из таблицы
+    QPushButton *button = (QPushButton*) sender(); // В указатель button записывается адресс кнопки
     int mas = 0;
-    while(button != *(delB+mas)){
+    while(button != *(delB+mas)){ // Через цикл while ищем индекс кнопки
         mas++;
     }
     delete checkB[mas]; // Освобождение памяти элемента
     delete editB[mas];
     delete lineEd[mas];
     delete delB[mas];
+    delB[mas] = NULL; // Присваиваем элементу массива значение NULL для функции on_pushButton_del_clicked()
     delete dateE[mas];
 }
 
@@ -166,3 +169,30 @@ void MainWindow::slotCheck()
             lineEdit->setPalette(QApplication::palette()); // Восстановление палитры по умолчанию
         }
 }
+
+void MainWindow::on_SaveFile_triggered()
+{
+    using namespace std;
+    ofstream file("Save.txt", ios::out);
+    ofstream file1("SaveNotes.txt", ios::out);
+    QString str;
+    QDate date;
+    int a;
+    if(file.is_open()){
+         for(int i=0;i<cnt;i++){
+             a = checkB[i]->isChecked();
+             file << a << ";";
+             str = lineEd[i]->text();
+             file << str.toStdString() << ";";
+             date = dateE[i]->date();
+             str = date.toString("dd.MM.yyyy");
+             file << str.toStdString() << ";" << endl;
+             str = ui->textEdit->toPlainText();
+             file1 << str.toStdString() << ";" << endl;
+             file.flush();
+             file1.flush();
+         }
+    }
+    else{ui->lineEdit->setText("Sosay");}
+}
+
