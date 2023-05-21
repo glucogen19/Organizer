@@ -156,7 +156,6 @@ void MainWindow::slotCheck()
     while(button != *(checkB+mas)){
         mas++;
     }
-
         QLineEdit* lineEdit = lineEd[mas];
         QPalette palette = lineEdit->palette();
         palette.setColor(QPalette::Base, "#99CCCC");
@@ -179,7 +178,8 @@ void MainWindow::on_SaveFile_triggered()
     QDate date;
     int a;
     if(file.is_open()){
-         for(int i=0;i<cnt;i++){
+        for(int i=0;i<cnt;i++){
+             if (delB[i] != NULL){
              a = checkB[i]->isChecked();
              file << a << ";";
              str = lineEd[i]->text();
@@ -191,8 +191,82 @@ void MainWindow::on_SaveFile_triggered()
              file1 << str.toStdString() << ";" << endl;
              file.flush();
              file1.flush();
-         }
+            }
+        }
     }
-    else{ui->lineEdit->setText("Sosay");}
+}
+
+
+void MainWindow::on_OpenFile_triggered()
+{
+    on_pushButton_del_clicked();
+    using namespace std;
+    ifstream file("Save.txt", ios::in);
+    ifstream file1("SaveNotes.txt", ios::in);
+    string str;
+    string str2;
+    QString Qstr;
+    int a;
+    char c;
+    if(file.is_open()){
+        while(getline(file,str)){
+            ui->scrollAreaWidgetContents->show();
+            checkB[cnt] = new QPushButton;
+            checkB[cnt]->setCheckable(1);
+            checkB[cnt]->setChecked(bool (str[0]));
+            checkB[cnt]->setFixedHeight(25);
+            ui->checkLay->setSpacing(5);
+            ui->checkLay->setAlignment(Qt::AlignTop);
+            ui->checkLay->addWidget(checkB[cnt]);
+            str.erase(0,2);
+
+            a = str.find(";");
+            str2 = str;
+            str2.erase(a, str2.size());
+            ui->lineEdit->setText(Qstr);
+            lineEd[cnt] = new QLineEdit;
+            lineEd[cnt]->setText(Qstr.fromStdString(str2));
+            lineEd[cnt]->setReadOnly(true);
+            lineEd[cnt]->setFixedHeight(25);
+            ui->lineEdLay->setSpacing(5);
+            ui->lineEdLay->addWidget(lineEd[cnt]);
+            ui->lineEdLay->setAlignment(Qt::AlignTop);
+
+
+            editB[cnt] = new QPushButton;
+            editB[cnt]->setFixedHeight(25);
+            ui->editLay->setSpacing(5);
+            ui->editLay->setAlignment(Qt::AlignTop);
+            ui->editLay->addWidget(editB[cnt]);
+
+            delB[cnt] = new QPushButton;
+            delB[cnt]->setFixedHeight(25);
+            ui->delLay->setSpacing(5);
+            ui->delLay->setAlignment(Qt::AlignTop);
+            ui->delLay->addWidget(delB[cnt]);
+
+
+            dateE[cnt] = new QDateEdit;
+            dateE[cnt]->setFixedHeight(25);
+            dateE[cnt]->setDate(ui->dateEdit->date());
+            dateE[cnt]->setReadOnly(true);
+            dateE[cnt]->setCalendarPopup(true);
+            dateE[cnt]->setFixedWidth(80);
+            dateE[cnt]->setMinimumDate(QDate::currentDate());
+
+            ui->dateLay->setSpacing(5);
+            ui->dateLay->setAlignment(Qt::AlignTop);
+            ui->dateLay->addWidget(dateE[cnt]);
+
+
+            connect(delB[cnt], SIGNAL(clicked()),this, SLOT(slotDel()));
+            connect(editB[cnt], SIGNAL(clicked()), this, SLOT(slotEdit()));
+            connect(checkB[cnt], SIGNAL(clicked()), this, SLOT(slotCheck()));
+
+
+            cnt++;
+        }
+    }
+
 }
 

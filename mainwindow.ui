@@ -75,8 +75,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>506</width>
-         <height>259</height>
+         <width>510</width>
+         <height>268</height>
         </rect>
        </property>
        <property name="sizePolicy">
@@ -147,7 +147,7 @@
      <x>0</x>
      <y>0</y>
      <width>530</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">
@@ -155,6 +155,7 @@
      <string>Файл</string>
     </property>
     <addaction name="SaveFile"/>
+    <addaction name="OpenFile"/>
    </widget>
    <addaction name="menu"/>
   </widget>
@@ -182,6 +183,14 @@
   <action name="action_5">
    <property name="text">
     <string>Настройки</string>
+   </property>
+  </action>
+  <action name="OpenFile">
+   <property name="text">
+    <string>Открыть</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
    </property>
   </action>
  </widget>

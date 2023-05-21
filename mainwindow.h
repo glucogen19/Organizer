@@ -25,6 +25,8 @@ private slots:
     void on_pushButton_del_clicked();
     void on_SaveFile_triggered();
 
+    void on_OpenFile_triggered();
+
 private:
     Ui::MainWindow *ui;
 };
