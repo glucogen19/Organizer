@@ -3,7 +3,6 @@
 #include <QKeyEvent>
 #include <QRandomGenerator>
 #include <QPalette>
-#include <iterator>
 #include <fstream>
 #include <iostream>
 
@@ -16,21 +15,23 @@ QPushButton *editB[50];
 QPushButton *delB[50];
 QDateEdit *dateE[50];
 
+
+//Блок кода окна MainWindow
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
      ui->setupUi(this);
      setFixedSize(530, 580);
-     setFocusPolicy(Qt::StrongFocus);
+     setFocusPolicy(Qt::StrongFocus); //Фокус
      ui->scrollArea->setFixedHeight(400);
-     ui->dateEdit->setDate(QDate::currentDate());
+     ui->dateEdit->setDate(QDate::currentDate()); //Установка системной даты
      ui->lineEdit->setFixedHeight(25);
      ui->dateEdit->setFixedHeight(25);
      ui->dateEdit->setFixedWidth(80);
      ui->pushButton->setFixedHeight(25);
      ui->pushButton_del->setFixedHeight(25);
-     ui->mainLay->setSpacing(5);
+     ui->mainLay->setSpacing(5); //Установка пространства
 
 }
 MainWindow::~MainWindow()
@@ -145,7 +146,7 @@ void MainWindow::slotEdit()
         mas++;
     }
         edit = !edit;
-        lineEd[mas]->setReadOnly(edit);
+        lineEd[mas]->setReadOnly(edit); //Разрешение/запрет на редактирование
         dateE[mas]->setReadOnly(edit);
 }
 
@@ -158,7 +159,7 @@ void MainWindow::slotCheck()
     }
         QLineEdit* lineEdit = lineEd[mas];
         QPalette palette = lineEdit->palette();
-        palette.setColor(QPalette::Base, "#99CCCC");
+        palette.setColor(QPalette::Base, "#99CCCC"); //Установка цвета заливки
         if(checkB[mas]->isChecked() == true) {
             lineEdit->setAutoFillBackground(true); // Установка флага автоматического закрашивания фона
             lineEdit->setPalette(palette);
@@ -172,16 +173,16 @@ void MainWindow::slotCheck()
 void MainWindow::on_SaveFile_triggered()
 {
     using namespace std;
-    ofstream file("Save.txt", ios::out);
+    ofstream file("Save.txt", ios::out); //Создание или открытие файла
     ofstream file1("SaveNotes.txt", ios::out);
     QString str;
     QDate date;
     int a;
-    if(file.is_open()){
+    if(file.is_open()){ //Проверка на открытость файла
         for(int i=0;i<cnt;i++){
-             if (delB[i] != NULL){
-             a = checkB[i]->isChecked();
-             file << a << ";";
+             if (delB[i] != NULL){  //Проверка на существование
+             a = checkB[i]->isChecked(); // Запись булевой переменной на состояние CheckB
+             file << a << ";"; //запись в файл
              str = lineEd[i]->text();
              file << str.toStdString() << ";";
              date = dateE[i]->date();
@@ -189,84 +190,9 @@ void MainWindow::on_SaveFile_triggered()
              file << str.toStdString() << ";" << endl;
              str = ui->textEdit->toPlainText();
              file1 << str.toStdString() << ";" << endl;
-             file.flush();
+             file.flush(); //Нужно
              file1.flush();
             }
         }
     }
 }
-
-
-void MainWindow::on_OpenFile_triggered()
-{
-    on_pushButton_del_clicked();
-    using namespace std;
-    ifstream file("Save.txt", ios::in);
-    ifstream file1("SaveNotes.txt", ios::in);
-    string str;
-    string str2;
-    QString Qstr;
-    int a;
-    char c;
-    if(file.is_open()){
-        while(getline(file,str)){
-            ui->scrollAreaWidgetContents->show();
-            checkB[cnt] = new QPushButton;
-            checkB[cnt]->setCheckable(1);
-            checkB[cnt]->setChecked(bool (str[0]));
-            checkB[cnt]->setFixedHeight(25);
-            ui->checkLay->setSpacing(5);
-            ui->checkLay->setAlignment(Qt::AlignTop);
-            ui->checkLay->addWidget(checkB[cnt]);
-            str.erase(0,2);
-
-            a = str.find(";");
-            str2 = str;
-            str2.erase(a, str2.size());
-            ui->lineEdit->setText(Qstr);
-            lineEd[cnt] = new QLineEdit;
-            lineEd[cnt]->setText(Qstr.fromStdString(str2));
-            lineEd[cnt]->setReadOnly(true);
-            lineEd[cnt]->setFixedHeight(25);
-            ui->lineEdLay->setSpacing(5);
-            ui->lineEdLay->addWidget(lineEd[cnt]);
-            ui->lineEdLay->setAlignment(Qt::AlignTop);
-
-
-            editB[cnt] = new QPushButton;
-            editB[cnt]->setFixedHeight(25);
-            ui->editLay->setSpacing(5);
-            ui->editLay->setAlignment(Qt::AlignTop);
-            ui->editLay->addWidget(editB[cnt]);
-
-            delB[cnt] = new QPushButton;
-            delB[cnt]->setFixedHeight(25);
-            ui->delLay->setSpacing(5);
-            ui->delLay->setAlignment(Qt::AlignTop);
-            ui->delLay->addWidget(delB[cnt]);
-
-
-            dateE[cnt] = new QDateEdit;
-            dateE[cnt]->setFixedHeight(25);
-            dateE[cnt]->setDate(ui->dateEdit->date());
-            dateE[cnt]->setReadOnly(true);
-            dateE[cnt]->setCalendarPopup(true);
-            dateE[cnt]->setFixedWidth(80);
-            dateE[cnt]->setMinimumDate(QDate::currentDate());
-
-            ui->dateLay->setSpacing(5);
-            ui->dateLay->setAlignment(Qt::AlignTop);
-            ui->dateLay->addWidget(dateE[cnt]);
-
-
-            connect(delB[cnt], SIGNAL(clicked()),this, SLOT(slotDel()));
-            connect(editB[cnt], SIGNAL(clicked()), this, SLOT(slotEdit()));
-            connect(checkB[cnt], SIGNAL(clicked()), this, SLOT(slotCheck()));
-
-
-            cnt++;
-        }
-    }
-
-}
-
